@@ -19,19 +19,18 @@ const createGameState = chatId => {
 }
 const getGreetMessage = isGroup =>
 	trueTrim(`
-	👋 Привет. Я — бот для игры в «угадай возраст» в групповых чатах.
-
-	📋 Правила просты: я кидаю вам фото человека, а ваша задача угадать его возраст. Чем точнее вы отвечаете, тем меньше баллов теряете.
-	${isGroup ? "" : "\n😉 Для начала, добавь меня в чат и вызови /game.\n"}
+	👋 Salam. Mən qrup çatlarında "yaşı təxmin et" oynamaq üçün bir robotam.
+📋 Qaydalar sadədir: Mən sizə bir insanın şəklini atıram, sizin vəzifəniz onun yaşını təxmin etməkdir. Nə qədər dəqiq cavab versəniz, bir o qədər az xal itirirsiniz.
+	${isGroup ? "" : "\n😉 Başlamaq üçün məni çata əlavə edin və zəng edin /. /game.\n"}
 	*Команды*
-	/game - 🕹 Новая игра
-	/stop - 🛑 Остановить игру
-	/top - 🔝 Рейтинг игроков чата
-	/chart - 🌎 Глобальный рейтинг
-	/donate - 💸 Поддержать проект
+	/game - 🕹 Yeni oyun
+	/stop - 🛑 Oyunu dayandırın
+	/top - 🔝 Çat oyunçusu reytinqi
+	/chart - 🌎 Qlobal reytinq
+	/donate - 💸 Layihəyə dəstək olun
 
-	Автор: @mikhailsdv
-	Мой канал: @FilteredInternet
+	Sahib 🇦🇿: @coolnorman
+	Rəsmi Kanal 🇦🇿: @Xxaosresmi
 `)
 const getRandomPerson = () => {
 	let imagePath = "./photos"
@@ -103,22 +102,22 @@ const stopGame = (ctx, chatId) => {
 						.map((member, index) => `${["🏆", "🎖", "🏅"][index] || "🔸"} ${index + 1}. ${bold(member.firstName)}: ${numberWithSpaces(member.score)} ${pluralize(member.score, "очко", "очка", "очков")}`)
 						.join("\n")}
 
-					❤️ Канал автора, где иногда публикуются новые прикольные боты @FilteredInternet.
-					🔄 /game - Еще разок?
+					❤️ Yeni sərin @Xxaosresmi botlarının bəzən dərc olunduğu müəllif kanalı.
+					🔄 /game - Bir daha?
 				`)
 			)
 		} else {
 			ctx.replyWithMarkdown(
 				trueTrim(`
-					*🏁 Ок, завершаю игру.*
+					*🏁 Yaxşı, oyunu bitirdim.*
 
-					❤️ Канал автора, где иногда публикуются новые прикольные боты @FilteredInternet.
-					🔄 /game - Еще разок?
+					❤️ Yeni sərin @Xxaosresmi botlarının bəzən dərc olunduğu müəllif kanalı.
+					🔄 /game - Bir Daha?
 				`)
 			)
 		}
 	} else {
-		ctx.reply("❌ Игра не была запущена. Вы можете запутить ее командой /start.")
+		ctx.reply("❌  Bu əmr yalnız söhbətlər üçün əlçatandır. /start.")
 	}
 }
 const getRoundMessage = (chatId, round, time) => {
@@ -204,7 +203,7 @@ const startGame = (ctx, chatId) => {
 					}
 				)
 			} else {
-				ctx.reply("🤔 Похоже, вы не играете. Ок, завершаю игру...")
+				ctx.reply("🤔 Deyəsən oynamırsan. Yaxşı, oyunu bitirdim....")
 				stopGame(ctx, chatId)
 				return
 			}
@@ -241,7 +240,7 @@ bot.command("game", ctx => {
 		let chat = getChat(chatId)
 		if (chat) {
 			if (chat.isPlaying) {
-				return ctx.reply("❌ У вас уже запущена игра. Вы можете ее остановить командой /stop.")
+				return ctx.reply("❌ Bu əmr yalnız söhbətlər üçün əlçatandır. /stop.")
 			} else {
 				chat.isPlaying = true
 				for (let key in chat.members) {
@@ -256,7 +255,7 @@ bot.command("game", ctx => {
 		ctx.replyWithMarkdown("*Игра начинается!*")
 		startGame(ctx, chatId)
 	} else {
-		ctx.reply("❌ Эта команда доступна только для чатов.")
+		ctx.reply("❌ Bu əmr yalnız söhbətlər üçün əlçatandır.")
 	}
 })
 
@@ -266,7 +265,7 @@ bot.command("stop", ctx => {
 		let chatId = message.chat.id
 		stopGame(ctx, chatId)
 	} else {
-		ctx.reply("❌ Эта команда доступна только для чатов.")
+		ctx.reply("❌ Bu əmr yalnız söhbətlər üçün əlçatandır..")
 	}
 })
 
@@ -310,9 +309,7 @@ bot.command("top", ctx => {
 					${top
 						.sort((a, b) => b.score - a.score)
 						.map((member, index) => `${["🏆", "🎖", "🏅"][index] || "🔸"} ${index + 1}. ${bold(member.firstName)}: ${numberWithSpaces(member.score)} ${pluralize(member.score, "очко", "очка", "очков")}`)
-						.join("\n")}
-
-					❤️ Канал автора, где иногда публикуются новые прикольные боты @FilteredInternet.
+						.join("\n")}Yeni sərin @Xxaosresmi botlarının bəzən dərc olunduğu müəllif kanalı.
 					🔄 /game - Еще разок?
 				`)
 				)
